@@ -1,0 +1,38 @@
+@startuml
+title Get user MAC
+
+usecase AP1 as "
+Wifi AP
+--
+Associate"
+
+usecase CP1 as "
+Captive portal
+--
+Authenticate and agree 
+to service terms
+==
+Contains link to local
+identity service 
+"
+
+usecase LS1 as "
+Local identity service
+--
+Establish association between 
+client IP and Wifi MAC address
+"
+
+
+:Client device: as CLI
+
+CLI -> AP1 :<b>1</b>
+AP1 --> CLI :<b>2</b> redirect to captive portal
+
+CLI --> CP1 :<b>3</b>
+CLI -->LS1 :<b>4</b> acess captive\nportal link
+
+note "Link can be embedded frame,\nimage, javascript ..." as N1
+N1 .. CP1
+
+@enduml

@@ -1,0 +1,28 @@
+@startuml
+title Local identity service tasks
+
+:Local identity service: as IS
+
+usecase IS1 as "
+Establish association between
+local client IP and MAC address
+"
+
+usecase IS2 as "
+Gather events
+==
+Proximity events
+Associate with local AP
+Captive portal enter
+Agree to terms
+Interact with local services
+"
+
+usecase IS3 as "
+Report events to global service
+==
+Can be online or cached
+"
+
+
+@enduml

@@ -1,0 +1,46 @@
+@startuml
+participant "User Device" as u
+participant "AllJoyn bus" as bus
+participant "Proximity Monitor" as mon
+participant "Group manager" as gm
+participant "Sharing box" as box 
+
+box -> bus: register on bus
+gm -> bus: register on bus
+mon -> bus: register on bus
+
+u -> bus: join local network\nand register on bus
+
+group monitor proximity
+mon -> mon: monitor local\nWiFi space
+end
+
+group register for proximity tracking
+u -> bus: find proximity service
+u -> mon: register device ID for tracking 
+end
+
+group form/join local group
+u -> bus: find group service
+u -> gm: join local group
+gm -> mon: is device in proximity?
+mon -> mon: lookup local records
+mon -> gm: return proximity state
+gm -> u: group join allowed/declined
+end
+
+group share a file
+u -> bus: find sharing service
+u -> box: upload a file for group
+box -> gm: notify group members\nabout new file
+end
+
+group retrieve a file
+u -> bus: find sharing service
+u -> box: get a list of shared files
+box -> gm: find groups device is part of
+box -> u: return a filtered list of files
+u -> box: download a file
+end
+
+@enduml
