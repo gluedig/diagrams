@@ -1,0 +1,19 @@
+@startuml
+"User Service" as us
+us - (Find user by id)
+us - (Get associated devices)
+us - (Get contacts list)
+us - (List owned items)
+us - (List bookmarked items)
+us - (List owned events)
+us - (List bookmarked events)
+us - (Login)
+us - (Logout)
+us - (Change password)
+us - (Associate device)
+us - (Edit details)
+
+[Event service] as es
+
+
+@enduml

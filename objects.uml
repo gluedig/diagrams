@@ -1,0 +1,122 @@
+@startuml
+class Event {
+ int event_id
+ string description
+ 
+ Location location
+ User owner
+ User[] participants
+ Item[] shared_items
+ Hub associated_hub
+ Schedule schedule
+ Timeline timeline
+ Visibility visibility
+ Permissions permissions
+ 
+ join(User)
+ leave(User)
+ invite(User)
+ share(Item)
+ edit_description()
+ register_for_updates()
+}
+
+class Timeline {
+ int timeline_id
+ TimelineEvent[] events
+}
+
+class TimelineEvent {
+	int event_id
+	enum event_type
+}
+
+class Schedule {
+ date_time start
+ date_time stop
+ edit_schedule()
+}
+
+class Permissions {
+ bool free_to_join 
+ edit_permissions()
+}
+
+class Hub {
+ display(Item)
+}
+
+class Visibility {
+ bool public
+ edit_visibility()
+}
+
+class User {
+ int user_id
+ string user_name
+ hash password
+ some user details ..
+ 
+ Device[] associated_devices
+ Item[] bookmarked_items
+ Event[] bookmarked_events
+ User[] contacts
+ 
+ login()
+ logout()
+ change_password()
+ change_details()
+ associate_device(Device)
+ bookmark_event(Event)
+ bookmark_item(Item)
+ add_contact(User)
+}
+
+class Item {
+ int item_id
+ User owner
+ 
+ update()
+ download()
+}
+
+class Location {
+ int location_id
+ string description
+ Event[] events
+ User[] present_users
+ 
+ register_for_updates()
+ create_event()
+ list_events(filter)
+ list_users(filter)
+ enter(User)
+ leave(User)
+}
+
+class Monitor {
+ Location location
+}
+
+class Device {
+ int device_id
+ User owner
+ hash unique_id
+ string description
+}
+
+Event "0:n" --o "0:n" User
+Event --o "0:n" Item
+Event "1:n" o--o "1" Location
+Event --o Timeline
+Event --o Permissions
+Event --o Visibility
+Event --o Schedule
+Event --o "0:1" Hub
+Timeline --o "0:n" TimelineEvent
+
+User "1" --o "1:n" Device
+User "1" --o "0:n" Item
+Location --o "0:n" User
+Monitor --o Location
+@enduml
